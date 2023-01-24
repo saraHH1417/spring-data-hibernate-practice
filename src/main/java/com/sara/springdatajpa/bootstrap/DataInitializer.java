@@ -5,8 +5,6 @@ import com.sara.springdatajpa.repositories.BookRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import javax.xml.crypto.Data;
-
 @Component
 public class DataInitializer implements CommandLineRunner {
 
@@ -28,7 +26,7 @@ public class DataInitializer implements CommandLineRunner {
         System.out.println("Id: " + savedDDD.getId());
 
         Book bookSIA = new Book("Spring In Action", "2323", "Unknown");
-        Book savedSIA = bookRepository.save(bookDDD);
+        Book savedSIA = bookRepository.save(bookSIA);
 
         bookRepository.findAll().forEach(book -> {
             System.out.println("Book Title: " + book.getTitle());
