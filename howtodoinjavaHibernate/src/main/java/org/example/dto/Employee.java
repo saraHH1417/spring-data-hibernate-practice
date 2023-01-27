@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @DynamicUpdate(value = true)
 @org.hibernate.annotations.Entity(optimisticLock = OptimisticLockType.ALL)
-@Table(name = "Employee", uniqueConstraints = {
+@Table(name = "TBL_EMPLOYEE", uniqueConstraints = {
         @UniqueConstraint(columnNames = "ID"),
         @UniqueConstraint(columnNames = "EMAIL") })
 public class Employee implements Serializable {
