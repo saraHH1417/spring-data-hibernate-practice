@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 public class DataInitializer implements CommandLineRunner {
 
     private final BookRepository bookRepository;
-
     public DataInitializer(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
@@ -37,6 +36,7 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("Book Isbn: " + book.getIsbn());
             System.out.println("Book Publisher: " + book.getPublisher());
         });
+
     }
 }
 

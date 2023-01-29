@@ -1,9 +1,6 @@
 package com.sara.springdatajpa.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.context.annotation.Primary;
 
 import java.util.List;
@@ -19,6 +16,7 @@ public class Book {
     private String title;
     private String isbn;
     private String publisher;
+
 
     private Long authorId;
 
@@ -77,6 +75,9 @@ public class Book {
         return publisher;
     }
 
+    public Long getAuthorId() {
+        return authorId;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -92,5 +93,9 @@ public class Book {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 }
