@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.sql.*;
 
-@Component
+@Component()
 public class AuthorDaoImpl implements AuthorDao{
 
     private final DataSource source;
