@@ -1,5 +1,6 @@
 package com.sara.springdatajpa.bootstrap;
 
+import com.sara.springdatajpa.domain.Author;
 import com.sara.springdatajpa.domain.Book;
 import com.sara.springdatajpa.repositories.BookRepository;
 import org.springframework.boot.CommandLineRunner;
