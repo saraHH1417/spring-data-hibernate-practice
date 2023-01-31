@@ -12,6 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -35,16 +37,16 @@ public class AuthorDaoIntegrationTest {
         assert author != null;
     }
 
-//    @Test
-//    void testGetAuthorByName() {
-//        Author savedAuthor = new Author();
-//        savedAuthor.setFirstName("Sara");
-//        savedAuthor.setLastName("Blue");
-//        authorDao.saveNewAuthor(savedAuthor);
-//
-//        Author author = authorDao.findAuthorByName("Sara", "Blue");
-//        assert author != null;
-//    }
+    @Test
+    void testGetAuthorByName() {
+        Author savedAuthor = new Author();
+        savedAuthor.setFirstName("Sara");
+        savedAuthor.setLastName("Blue");
+        authorDao.saveNewAuthor(savedAuthor);
+
+        List<Author> authors = authorDao.findAuthorByName("Sara", "Blue");
+        assert authors.size() != 0;
+    }
 
     @Test
     void testSavedAuthor() {

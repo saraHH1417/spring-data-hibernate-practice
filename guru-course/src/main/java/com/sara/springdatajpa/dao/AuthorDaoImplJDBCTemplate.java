@@ -7,6 +7,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @Component
 @Primary
 public class AuthorDaoImplJDBCTemplate implements AuthorDao{
@@ -26,19 +30,25 @@ public class AuthorDaoImplJDBCTemplate implements AuthorDao{
         );
     }
 
-    @Override
-    public Author findAuthorByName(String firstName, String lastName) {
-        return null;
-    }
 
-//    @Override this has a problem what to do if the result is more than one item
-//    public Author findAuthorByName(String firstName, String lastName) {
-//        return jdbcTemplate.queryForObject(
-//                "SELECT * FROM author WHERE first_name = ? and last_name = ?",
-//                getRowMapper(),
-//                firstName,
-//                lastName);
-//    }
+    @Override //this has a problem what to do if the result is more than one item
+    public List<Author> findAuthorByName(String firstName, String lastName) {
+        List<Map<String, Object>> rows =  jdbcTemplate.queryForList(
+                "SELECT * FROM author WHERE first_name = ? and last_name = ?",
+                firstName,
+                lastName);
+
+        List<Author> authors = new ArrayList<>();
+
+        for (Map<String, Object> row : rows) {
+            Author author = new Author();
+            author.setId(Long.parseLong(String.valueOf(row.get("id"))));
+            author.setFirstName(String.valueOf(row.get("first_name")));
+            author.setLastName(String.valueOf(row.get("last_name")));
+            authors.add(author);
+        }
+        return authors;
+    }
 
     @Override
     public Author saveNewAuthor(Author author) {

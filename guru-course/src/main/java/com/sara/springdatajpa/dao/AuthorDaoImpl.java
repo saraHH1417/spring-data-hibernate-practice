@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component()
 public class AuthorDaoImpl implements AuthorDao{
@@ -47,11 +49,11 @@ public class AuthorDaoImpl implements AuthorDao{
     }
 
     @Override
-    public Author findAuthorByName(String firstName, String lastName) {
+    public List<Author> findAuthorByName(String firstName, String lastName) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-
+        List<Author> authors = new ArrayList<>();
         try {
             connection = source.getConnection();
             preparedStatement = connection.prepareStatement("SELECT * from author where" +
@@ -62,7 +64,8 @@ public class AuthorDaoImpl implements AuthorDao{
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                return getAuthorFromRS(resultSet);
+                authors.add(getAuthorFromRS(resultSet));
+                return authors;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -73,7 +76,7 @@ public class AuthorDaoImpl implements AuthorDao{
                 throw new RuntimeException(e);
             }
         }
-        return null;
+        return authors;
     }
 
     @Override
