@@ -8,7 +8,7 @@ import guru.springframework.jdbc.domain.Book;
 import guru.springframework.jdbc.repositories.AuthorRepository;
 import guru.springframework.jdbc.repositories.BookRepository;
 import net.bytebuddy.utility.RandomString;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -171,9 +172,12 @@ public class DaoIntegrationTest {
 
         authorDao.deleteAuthorById(saved.getId());
 
-        Author deleted = authorDao.getById(saved.getId());
-
-        Assertions.assertThat(deleted).isNull();
+//        Author deleted = authorDao.getById(saved.getId());
+//
+//        Assertions.assertThat(deleted).isNull();
+        Assertions.assertThrows(JpaObjectRetrievalFailureException.class, () -> {
+           Author deleted = authorDao.getById(saved.getId());
+        });
 
     }
 
