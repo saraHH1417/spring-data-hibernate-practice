@@ -44,7 +44,6 @@ class BookDaoHibernateTest {
         assertThat(books).isNotNull();
         assertThat(books.size()).isEqualTo(10);
     }
-    }
 
     @Test
     void findAllBooks() {

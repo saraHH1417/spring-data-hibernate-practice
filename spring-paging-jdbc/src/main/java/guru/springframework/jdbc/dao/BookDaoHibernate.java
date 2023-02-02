@@ -16,7 +16,6 @@ import java.util.List;
  * Created by jt on 11/25/21.
  */
 @Component
-@Primary
 public class BookDaoHibernate implements BookDao {
     private final EntityManagerFactory emf;
 

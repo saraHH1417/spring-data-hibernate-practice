@@ -3,12 +3,14 @@ package guru.springframework.jdbc.dao;
 import guru.springframework.jdbc.domain.Book;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by jt on 11/25/21.
  */
+@Component
 public class BookDaoJDBCTemplate implements BookDao {
     private final JdbcTemplate jdbcTemplate;
 

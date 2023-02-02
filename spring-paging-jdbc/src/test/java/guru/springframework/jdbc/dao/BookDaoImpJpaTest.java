@@ -1,8 +1,9 @@
 package guru.springframework.jdbc.dao;
 
+import guru.springframework.jdbc.domain.Author;
 import guru.springframework.jdbc.domain.Book;
 import guru.springframework.jdbc.repositories.BookRepository;
-import org.assertj.core.api.Assert;
+import jakarta.persistence.EntityManagerFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
@@ -24,22 +24,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles("local")
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ComponentScan(basePackages = {"guru.springframework.jdbc.dao"})
-class BookDaoJDBCTemplateTest {
-
-    @Autowired
-    JdbcTemplate jdbcTemplate;
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+public class BookDaoImpJpaTest {
 
     @Autowired
     BookDao bookDao;
     @Autowired
     private BookRepository bookRepository;
 
-    @BeforeEach
-    void setUp() {
-        bookDao = new BookDaoJDBCTemplate(jdbcTemplate);
-    }
 
     @Test
     void getById() {
@@ -64,7 +57,7 @@ class BookDaoJDBCTemplateTest {
 
     @Test
     void testFindAllBooksPage3() {
-        List<Book> books = bookDao.findAllBooks(10, 0);
+        List<Book> books = bookDao.findAllBooks(10, 100);
         Assertions.assertThat(books).isNotNull();
         Assertions.assertThat(books.size()).isEqualTo(0); // because size of rows we have in database is 30
     }

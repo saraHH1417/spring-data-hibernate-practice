@@ -3,7 +3,7 @@ package guru.springframework.jdbc;
 import guru.springframework.jdbc.dao.AuthorDao;
 import guru.springframework.jdbc.dao.BookDao;
 import guru.springframework.jdbc.dao.AuthorDaoImpl;
-import guru.springframework.jdbc.dao.BookDaoImpl;
+import guru.springframework.jdbc.dao.BookDaoSpringDataJpaImpl;
 import guru.springframework.jdbc.domain.Author;
 import guru.springframework.jdbc.domain.Book;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 @ActiveProfiles("local")
 @DataJpaTest
-@Import({AuthorDaoImpl.class, BookDaoImpl.class})
+@Import({AuthorDaoImpl.class, BookDaoSpringDataJpaImpl.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class DaoIntegrationTest {
     @Autowired
