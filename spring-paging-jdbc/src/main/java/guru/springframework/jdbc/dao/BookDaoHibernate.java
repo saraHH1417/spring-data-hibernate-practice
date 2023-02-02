@@ -1,17 +1,22 @@
 package guru.springframework.jdbc.dao;
 
 import guru.springframework.jdbc.domain.Book;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Pageable;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
  * Created by jt on 11/25/21.
  */
+@Component
+@Primary
 public class BookDaoHibernate implements BookDao {
     private final EntityManagerFactory emf;
 
@@ -26,7 +31,20 @@ public class BookDaoHibernate implements BookDao {
 
     @Override
     public List<Book> findAllBookSortByTitle(Pageable pageable) {
-        return null;
+        EntityManager em = getEntityManager();
+
+        try {
+            String hql = "SELECT b FROM Book b order by b.title "
+                    + pageable.getSort().getOrderFor("title").getDirection().name();
+
+            TypedQuery<Book> books = em.createQuery(
+                    hql,Book.class);
+            books.setFirstResult(Math.toIntExact(pageable.getOffset()));
+            books.setMaxResults(pageable.getPageSize());
+            return books.getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
@@ -34,10 +52,11 @@ public class BookDaoHibernate implements BookDao {
         EntityManager em = getEntityManager();
 
         try {
-            TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b", Book.class);
-            query.setFirstResult(Math.toIntExact(pageable.getOffset()));
-            query.setMaxResults(pageable.getPageSize());
-            return query.getResultList();
+            TypedQuery<Book> books = em.createQuery(
+                    "SELECT b FROM Book b",Book.class);
+            books.setFirstResult(Math.toIntExact(pageable.getOffset()));
+            books.setMaxResults(pageable.getPageSize());
+            return books.getResultList();
         } finally {
             em.close();
         }
